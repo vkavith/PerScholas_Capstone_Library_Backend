@@ -1,3 +1,5 @@
+//Seed Book Data
+
 const starterBooks = [
   {
     bookName: "To Kill a Mockingbird",
