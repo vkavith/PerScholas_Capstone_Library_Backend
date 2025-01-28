@@ -39,3 +39,16 @@ router.get("/:id", async(req,res) => {
     }
 });
 
+// Update Book Details including the Stock
+
+router.put("/:id", async(req,res) => {
+    try{
+        const updateBook = await Book.findByIdAndUpdate(req.params.id, req.body);
+        res.json(updateBook);
+    }catch(error) {
+        res.status(500).json({error: error.message});
+    }
+});
+
+//Delete a Book 
+
