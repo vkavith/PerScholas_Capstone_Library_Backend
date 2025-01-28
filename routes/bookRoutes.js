@@ -13,3 +13,29 @@ router.get("/", async(req, res) => {
     }
 });
 
+//create a new Book
+
+router.post("/", async(req,res) => {
+    console.log(req.body);
+
+    try{
+        const createBook = await Book.create(req.body);
+        console.log(req.body);
+        res.json(createBook);
+    } catch(error) {
+        res.status(500).json({error: error.message});
+    }
+});
+
+
+// Get 1 book based on ISBN or bookname
+
+router.get("/:id", async(req,res) => {
+    try{
+        const singleBook = await Book.findById(req.params.id);
+        res.json(singleBook);
+    }catch(error) {
+        res.status(500).json({error: error.message});
+    }
+});
+
