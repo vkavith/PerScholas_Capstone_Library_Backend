@@ -1,4 +1,4 @@
-//
+//Seed Users
 
 const starterUsers = [
   {
