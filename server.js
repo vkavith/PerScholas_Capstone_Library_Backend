@@ -20,6 +20,10 @@ const option = {
 
 app.use(cors(option));
 app.use(express.json());
+
+app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", "https://perscholas-capstone-library-frontend.onrender.com"); res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE"); res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); next(); });
+
+
 app.use("/api/books", bookRoutes);
 
 //home route
