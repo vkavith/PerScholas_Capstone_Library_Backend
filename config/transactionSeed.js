@@ -6,7 +6,7 @@ const starterTransactions = [
     book: new mongoose.Types.ObjectId("6799440059d18ea54c655785"), // Specific Book ID
     user: new mongoose.Types.ObjectId("679e820af7976ba55eae7426"), // Specific User ID
     issueDate: new Date(),
-    dueDate: new Date(Date.now() + 14), // 14 days from now
+    dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days from now
     returnDate: null,
     status: "issued",
   },
@@ -38,7 +38,7 @@ const starterTransactions = [
     book: new mongoose.Types.ObjectId("6799440059d18ea54c655787"),
     user: new mongoose.Types.ObjectId("679e820af7976ba55eae7428"),
     issueDate: new Date(),
-    dueDate: new Date(Date.now() + 21), // 21 days from now
+    dueDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000), // 21 days from now
     returnDate: null,
     status: "issued",
   },
