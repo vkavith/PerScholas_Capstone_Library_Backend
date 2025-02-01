@@ -13,6 +13,10 @@ const Book = require("./models/book");
 const starterUsers = require("./config/userSeed");
 const User = require("./models/user");
 
+
+const starterTransactions = require("./config/transactionSeed");
+const bookTransaction = require("./models/bookTransaction");
+
 const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
 
@@ -99,14 +103,6 @@ app.get("/api/seed/users", async (req, res) => {
         });
       }
   
-      // Handle duplicate key errors
-      if (error.code === 11000) {
-        return res.status(409).json({
-          message: "Duplicate key error",
-          duplicateField: error.keyValue
-        });
-      }
-  
       // Generic error response
       res.status(500).json({ 
         message: "Failed to seed users",
@@ -115,6 +111,35 @@ app.get("/api/seed/users", async (req, res) => {
       });
     }
   });
+
+
+  //Seed Book Transaction
+  app.get("/api/seed/transactions", async (req, res) => {
+    try {
+        //Make sure Books and Users are seeded
+        const bookCount = await Book.countDocuments();
+        const userCount = await User.countDocuments();
+
+        if(bookCount === 0 || userCount === 0) {
+            return res.status(400).json({
+                message: "Please seed data for Books and Users first"
+            });
+        }
+
+     //Clear existing transaction
+     await bookTransaction.deleteMany({});
+     
+     //Create new transactions
+     const seedTransaction = await bookTransaction.create(starterTransactions);
+     console.log("Database seeded with Book Transactions successfully");
+     res.json(seedTransaction);
+    } catch(error) {
+        console.error("Book transaction seeding error", error.message);
+        res.status(500).json({
+            error: error.messgae
+        });
+    }
+}); 
 
 app.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);
