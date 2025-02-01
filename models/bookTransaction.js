@@ -12,13 +12,18 @@ const TransactionSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+
+  /* user: {
+      type: String,
+      required: true,
+  },*/
   issueDate: {
     type: Date,
     default: Date.now,
   },
   dueDate: {
     type: Date,
-    required: true,
+    //required: true,
   },
   returnDate: {
     type: Date,

@@ -10,8 +10,11 @@ conn();
 const starterBooks = require("./config/bookSeed");
 const Book = require("./models/book");
 
-const bookRoutes = require("./routes/bookRoutes");
+const starterUsers = require("./config/userSeed");
+const User = require("./models/user");
 
+const bookRoutes = require("./routes/bookRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 /*const option = {
 //  origin: "https://perscholas-capstone-library-frontend.onrender.com",
@@ -26,6 +29,7 @@ app.use(express.json());
 //app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", "https://perscholas-capstone-library-frontend.onrender.com"); res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE"); res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); next(); });
 
 app.use("/api/books", bookRoutes);
+app.use("/api/users", userRoutes);
 
 //home route
 app.get("/", (req, res) => {
@@ -48,6 +52,69 @@ app.get("/api/seed/books", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+//Seed the initial data for Users
+/*
+app.get("/api/seed/users", async (req, res) => {
+   try {
+    //Clear existing data
+    await User.deleteMany({});
+
+    //Insert new User Data
+    const seedUsers = await User.create(starterUsers);
+    console.log("Database seeded with Users Data successfully");
+    res.json(seedUsers);
+   } catch(error) {
+    console.error("Sedding error", error.message);
+    res.status(500).json({ error: error.message});
+   }
+});
+
+*/
+
+// Seed Users Route with Detailed Error Handling
+app.get("/api/seed/users", async (req, res) => {
+    try {
+      // Validate starter users
+      if (!starterUsers || starterUsers.length === 0) {
+        return res.status(400).json({ message: "No users to seed" });
+      }
+  
+      // Clear existing data
+       await User.deleteMany({});
+      
+      // Insert new User Data
+      const seedUsers = await User.create(starterUsers);
+      
+      console.log("Database seeded with Users Data successfully");
+      res.json(seedUsers);
+    } catch(error) {
+      console.error("User Seeding error:", error);
+      
+      // Handle specific Mongoose validation errors
+      if (error.name === 'ValidationError') {
+        return res.status(400).json({
+          message: "Validation Error",
+          errors: Object.values(error.errors).map(err => err.message)
+        });
+      }
+  
+      // Handle duplicate key errors
+      if (error.code === 11000) {
+        return res.status(409).json({
+          message: "Duplicate key error",
+          duplicateField: error.keyValue
+        });
+      }
+  
+      // Generic error response
+      res.status(500).json({ 
+        message: "Failed to seed users",
+        error: error.message,
+        stack: error.stack 
+      });
+    }
+  });
 
 app.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);

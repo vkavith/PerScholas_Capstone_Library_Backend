@@ -1,35 +1,32 @@
-//Seed Users
-
 const starterUsers = [
   {
     username: "admin",
-    email: "admin@library.com",
-    password: "admin",
+    email: "admine@library.com",
+    password: "admin123",
     isAdmin: true,
   },
-
   {
-    username: "john_doe",
+    username: "john_unique",
     email: "john@gmail.com",
-    password: "john123@#",
+    password: "john123",
     isAdmin: false,
   },
   {
-    username: "jane_smith",
-    email: "jane@gmail.com",
-    password: "jane1!@#",
+    username: "jane",
+    email: "jane_unique@gmail.com",
+    password: "jane123",
     isAdmin: false,
   },
   {
     username: "melanie",
-    email: "melanie@hotmail.com",
+    email: "melanie_unique@hotmail.com",
     password: "mel123",
     isAdmin: false,
   },
   {
     username: "kavitha",
-    email: "vkavith@gmail.com",
-    password: "kavitha",
+    email: "kavitha@gmail.com",
+    password: "kavitha123",
     isAdmin: false,
   },
 ];
