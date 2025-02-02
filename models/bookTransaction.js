@@ -23,6 +23,7 @@ const TransactionSchema = new mongoose.Schema({
   },
   dueDate: {
     type: Date,
+    default: () => new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
     //required: true,
   },
   returnDate: {
