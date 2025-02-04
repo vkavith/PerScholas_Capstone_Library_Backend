@@ -29,18 +29,18 @@ router.post("/", async (req, res) => {
     const existTransaction = await Transaction.findOne({
       book: book._id,
       user: user._id,
-      status: 'issued'
+      status: "issued",
     });
 
     if (existTransaction) {
-      return res.status(400).json({ message: 'User already has the book' });
+      return res.status(400).json({ message: "User already has the book" });
     }
 
     // Create transaction
     const transaction = await Transaction.create({
       book: book._id,
       user: user._id,
-      status: "issued"
+      status: "issued",
     });
 
     // Update book stock
@@ -50,6 +50,22 @@ router.post("/", async (req, res) => {
     res.json(transaction);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Get issued books for a user
+router.get("/", async (req, res) => {
+  try {
+    const { user, status } = req.query;
+
+    const transactions = await Transaction.find({
+      user: user,
+      status: status,
+    });
+
+    res.json(transactions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
