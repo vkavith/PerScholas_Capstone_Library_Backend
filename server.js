@@ -19,6 +19,7 @@ const bookTransaction = require("./models/bookTransaction");
 const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
 const issuetransactionRoutes = require("./routes/issuetransactionRoutes");
+const returntransactionRoutes = require("./routes/returntransactionRoutes");
 
 /*const option = {
 //  origin: "https://perscholas-capstone-library-frontend.onrender.com",
@@ -35,6 +36,7 @@ app.use(express.json());
 app.use("/api/books", bookRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/issuetransactions", issuetransactionRoutes);
+app.use("/api/returntransactions", returntransactionRoutes);
 
 //home route
 app.get("/", (req, res) => {
