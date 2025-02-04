@@ -57,11 +57,11 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const { user, status } = req.query;
-
+    //Find transaction with book details
     const transactions = await Transaction.find({
       user: user,
       status: status,
-    });
+    }).populate("book"); //Populate book details
 
     res.json(transactions);
   } catch (error) {
