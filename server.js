@@ -1,13 +1,14 @@
 require("dotenv").config();
 const express = require("express");
-//const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 const conn = require("./config/db");
 conn();
 
-const starterBooks = require("./config/bookSeed");
+const { starterBooks, refreshBookImages } = require("./config/bookSeed");
+
+//const starterBooks = require("./config/bookSeed");
 const Book = require("./models/book");
 
 const starterUsers = require("./config/userSeed");
@@ -44,7 +45,7 @@ app.get("/", (req, res) => {
 });
 
 //Seed the initial data for Books
-
+/*
 app.get("/api/seed/books", async (req, res) => {
   try {
     //Clear existing data
@@ -56,6 +57,29 @@ app.get("/api/seed/books", async (req, res) => {
     res.json(seedBooks);
   } catch (error) {
     console.error("Seeding error", error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+*/
+
+app.get("/api/seed/books", async (req, res) => {
+  try {
+    console.log("Starting book seeding process...");
+
+    // Get books with fresh images
+    const bookImages = await refreshBookImages();
+
+    // Clear existing data
+    await Book.deleteMany({});
+
+    // Insert new Book Data
+    const seedBooks = await Book.create(bookImages);
+    console.log(
+      "Database seeded with Books Data and fresh images successfully"
+    );
+    res.json(seedBooks);
+  } catch (error) {
+    console.error("Seeding error:", error.message);
     res.status(500).json({ error: error.message });
   }
 });

@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
       status: "issued",
     });
 
-    // Update book stock
+    // Update book stock in Library Catalog
     book.stock = book.stock - 1;
     await book.save();
 
@@ -52,6 +52,7 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Get issued books for a user
 router.get("/", async (req, res) => {
