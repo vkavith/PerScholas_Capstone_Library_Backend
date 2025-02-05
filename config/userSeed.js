@@ -1,3 +1,5 @@
+//Seed User Data
+
 const starterUsers = [
   {
     username: "admin",

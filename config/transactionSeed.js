@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
+//Seed transactions
+
 const starterTransactions = [
   {
-    //  valid ObjectIds from  Book and User collection
+    //  valid ObjectIds from  Book and User collection present in MongoDB
     book: new mongoose.Types.ObjectId("6799440059d18ea54c655785"), // Specific Book ID
     user: new mongoose.Types.ObjectId("679e820af7976ba55eae7426"), // Specific User ID
     issueDate: new Date(),

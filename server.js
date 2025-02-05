@@ -1,11 +1,12 @@
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables from .env file
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 const conn = require("./config/db");
-conn();
+conn(); // Establish database connection
 
+// Import seed data and models for initial data population
 const { starterBooks, refreshBookImages } = require("./config/bookSeed");
 
 //const starterBooks = require("./config/bookSeed");
@@ -17,6 +18,7 @@ const User = require("./models/user");
 const starterTransactions = require("./config/transactionSeed");
 const bookTransaction = require("./models/bookTransaction");
 
+// Import route handlers for different API endpoints
 const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
 const issuetransactionRoutes = require("./routes/issuetransactionRoutes");
@@ -33,7 +35,7 @@ app.use(cors());
 app.use(express.json());
 
 //app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", "https://perscholas-capstone-library-frontend.onrender.com"); res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE"); res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); next(); });
-
+// Define route handlers for different API endpoints
 app.use("/api/books", bookRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/issuetransactions", issuetransactionRoutes);
@@ -62,6 +64,7 @@ app.get("/api/seed/books", async (req, res) => {
 });
 */
 
+// Route to seed books with fresh images
 app.get("/api/seed/books", async (req, res) => {
   try {
     console.log("Starting book seeding process...");
@@ -166,7 +169,7 @@ app.get("/api/seed/transactions", async (req, res) => {
     });
   }
 });
-
+//Start the server
 app.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);
 });

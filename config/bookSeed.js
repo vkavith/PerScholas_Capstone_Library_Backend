@@ -185,8 +185,6 @@ const starterBooks = [
 
 //module.exports = starterBooks;
 
-
-
 // Function to refresh images from Google Books API
 const refreshBookImages = async () => {
   const updatedBooks = await Promise.all(
@@ -194,17 +192,22 @@ const refreshBookImages = async () => {
       try {
         const searchTerm = `${book.bookName} ${book.author}`;
         const response = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchTerm)}`
+          `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
+            searchTerm
+          )}`
         );
 
-        const imageUrl = response.data.items?.[0]?.volumeInfo?.imageLinks?.thumbnail;
-        
+        const imageUrl =
+          response.data.items?.[0]?.volumeInfo?.imageLinks?.thumbnail;
+
         return {
           ...book,
-          imageUrl: imageUrl ? imageUrl.replace('http:', 'https:') : book.imageUrl
+          imageUrl: imageUrl
+            ? imageUrl.replace("http:", "https:")
+            : book.imageUrl,
         };
       } catch (error) {
-        return book; // Keep original image if fetch fails
+        return book; // Keep original image in Seed Data if the GET request fails
       }
     })
   );

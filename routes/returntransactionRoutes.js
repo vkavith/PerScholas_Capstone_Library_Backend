@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
     transaction.status = "returned";
     await transaction.save();
 
-    // Update book stock
+    // Update book stock in Library catalog, increase count by 1, if book is returned
     const book = await Book.findById(transaction.book);
     if (book) {
       book.stock = book.stock + 1;

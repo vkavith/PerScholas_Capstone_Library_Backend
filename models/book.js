@@ -1,4 +1,5 @@
-// models/Book.js
+// models/book.js - Model for Book schema
+
 const mongoose = require("mongoose");
 
 const BookSchema = new mongoose.Schema({
