@@ -185,7 +185,7 @@ const starterBooks = [
 
 //module.exports = starterBooks;
 
-// Function to refresh images from Google Books API
+// Function to refresh images from Google API
 const refreshBookImages = async () => {
   const updatedBooks = await Promise.all(
     starterBooks.map(async (book) => {
