@@ -23,18 +23,18 @@ const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
 const issuetransactionRoutes = require("./routes/issuetransactionRoutes");
 const returntransactionRoutes = require("./routes/returntransactionRoutes");
-
-const option = {
+// this below one for Render
+/*const option = {
   origin: "https://perscholas-capstone-library-frontend.onrender.com",
   methods: "GET,PUT,PATCH,POST,DELETE",
   credentials: true,
-};
+}; */
 
-app.use(cors(option));
-//app.use(cors());
+//app.use(cors(option));
+app.use(cors());
 app.use(express.json());
-
-app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", "https://perscholas-capstone-library-frontend.onrender.com"); res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE"); res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); next(); });
+//below one for render
+//app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", "https://perscholas-capstone-library-frontend.onrender.com"); res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE"); res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); next(); });
 // Define route handlers for different API endpoints
 app.use("/api/books", bookRoutes);
 app.use("/api/users", userRoutes);
